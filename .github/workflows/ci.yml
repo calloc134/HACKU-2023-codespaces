@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    # 実行ステップ
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 依存関係のインストール
+      - name: install dependencies
+        run: npm install --frozen-lockfile
+        
+      # 型チェック
+      - name: typecheck
+        run: npx tsc --noEmit
