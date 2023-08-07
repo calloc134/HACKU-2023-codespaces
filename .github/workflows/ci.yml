@@ -27,4 +27,4 @@ jobs:
         
       # 型チェック
       - name: typecheck
-        run: npm tsc --noEmit
+        run: npx tsc --noEmit
