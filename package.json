@@ -11,9 +11,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.32.0",
     "commitlint": "^17.6.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
