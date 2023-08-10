@@ -28,6 +28,7 @@ const Home = () => {
           size="lg"
           mt={4}
           background={"gray.600"}
+          shadow="xl"
         >
           ログイン画面へ
         </Button>
