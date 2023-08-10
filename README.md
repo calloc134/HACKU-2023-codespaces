@@ -1,27 +1,35 @@
-# React + TypeScript + Vite
+# Open Hack U 2023 コイルカ - usotsukey
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+このリポジトリは、Open Hack U 2023 コイルカのチーム usotsukey のリポジトリです。
 
-Currently, two official plugins are available:
+## 利用技術
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [TypeScript](https://www.typescriptlang.org/)
+- [react](https://reactjs.org/)
+- [vite](https://vitejs.dev/)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/)
+- [Chakra UI](https://chakra-ui.com/)
+- [prettier](https://prettier.io/)
+- [react-router](https://reactrouter.com/)
+  その他
 
-## Expanding the ESLint configuration
+## 実行方法
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### ローカルでの実行
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+$ git clone
+$ cd usotsukey
+$ npm install
+$ npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### devcontainer での実行
+
+```bash
+$ npm run dev
+```
+
+## コイルカメンバー
+
+- [calloc134](https://github.com/calloc134)
