@@ -253,7 +253,7 @@ create table posts (
 
 --  default timezone('utc'::text, now()) not null これなんぞ
 -- is_lieは、嘘かどうかを判定するためのフラグです。嘘の場合はtrue、本当の場合はfalseです。
--- 変更する可能性が非常に大きい，嘘かどうかの2値だけではなくパラメータを格納すると思う
+-- 変更する可能性が非常に大きい，嘘かどうかの2値だけではなくパラメータを格納したり，DBに投げる前に判定結果をもとに別の処理をしたりするかもしれない
 
 alter table posts enable row level security;
 
