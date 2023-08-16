@@ -34,3 +34,4 @@ $ npm run dev
 
 - [calloc134](https://github.com/calloc134)
 - [neruneruna7](https://github.com/neruneruna7)
+- [haruto0707](https://github.com/haruto0707)
