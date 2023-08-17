@@ -6,7 +6,7 @@ export const IndexPage = () => {
       direction="column"
       align="center"
       justify="center"
-      bg="teal.500"
+      bg="#D6BCFA"
       minH="100vh"
       p={8}
     >
