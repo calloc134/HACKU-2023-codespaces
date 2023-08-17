@@ -16,6 +16,8 @@ export const CenterBox = (props: Props) => {
       p={8}
     >
       <Box
+        width="380px"
+        position="relative"
         textAlign="center"
         mb={6}
         p={6}

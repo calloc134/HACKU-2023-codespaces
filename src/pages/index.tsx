@@ -1,6 +1,20 @@
-import { Box, Flex, Heading, Button, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Button,
+  Text,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 
 export const IndexPage = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/auth/login");
+  };
+
   return (
     <Flex
       direction="column"
@@ -27,11 +41,17 @@ export const IndexPage = () => {
           colorScheme="whiteAlpha"
           size="lg"
           mt={4}
+          marginBottom="2"
           background={"gray.600"}
-          shadow="xl"
+          shadow="xs"
+          onClick={handleClick}
         >
           ログイン画面へ
         </Button>
+        <br />
+        <ChakraLink color="teal.500" as={ReactRouterLink} to="/auth/register">
+          アカウントを作成
+        </ChakraLink>
       </Box>
     </Flex>
   );

@@ -2,8 +2,12 @@ import { Heading, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { CenterBox } from "../../components/CenterBox";
 import { EmailInput, PasswordInput } from "../../components/auth/AuthInput";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,6 +18,18 @@ export const LoginPage = () => {
 
   return (
     <CenterBox>
+      <Button
+        position="absolute"
+        borderEndRadius="full"
+        left="0"
+        mb={4}
+        variant="ghost"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <ArrowBackIcon fontSize="3xl" />
+      </Button>
       <Heading mb={4} color={"gray.600"}>
         ログイン
       </Heading>
