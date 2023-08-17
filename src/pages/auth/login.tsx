@@ -4,6 +4,7 @@ import { CenterBox } from "../../components/CenterBox";
 import { EmailInput, PasswordInput } from "../../components/auth/AuthInput";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabase";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,18 @@ export const LoginPage = () => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
 
+  const handleSubmit = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+      if (error) throw error;
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <CenterBox>
       <Button
@@ -24,6 +37,8 @@ export const LoginPage = () => {
         left="0"
         mb={4}
         variant="ghost"
+        _hover={{ bg: "gray.200" }}
+        _active={{ bg: "gray.300" }}
         onClick={() => {
           navigate("/");
         }}
@@ -46,6 +61,7 @@ export const LoginPage = () => {
         background={"gray.600"}
         type="submit"
         shadow="xl"
+        onClick={handleSubmit}
       >
         Sign in
       </Button>
