@@ -6,7 +6,7 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase";
 
-export const LoginPage = () => {
+export const SignInPage = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");

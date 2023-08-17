@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { IndexPage } from "./pages";
-import { LoginPage } from "./pages/auth/login";
-import { RegisterPage } from "./pages/auth/register";
+import { SignInPage } from "./pages/auth/signin";
+import { SignUpPage } from "./pages/auth/signup";
 import { HomePage } from "./pages/home";
 import { useSession } from "./supabase";
 
@@ -17,8 +17,8 @@ export const App = () => {
           <Route path="/home" element={<HomePage />} />
           {!session ? (
             <>
-              <Route path="/auth/login" element={<LoginPage />} />
-              <Route path="/auth/register" element={<RegisterPage />} />
+              <Route path="/auth/signin" element={<SignInPage />} />
+              <Route path="/auth/signup" element={<SignUpPage />} />
             </>
           ) : (
             <></>
