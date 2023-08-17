@@ -14,7 +14,7 @@ export const IndexPage = () => {
   const session = useSession();
 
   const handleClickToHome = () => {
-    navigate("/auth/home");
+    navigate("/home");
   };
   const handleClickToSignIn = () => {
     navigate("/auth/signin");
