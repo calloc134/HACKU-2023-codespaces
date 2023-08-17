@@ -1,15 +1,16 @@
 
 create table app_users (
-    id uuid references auth.users default auth.uid() not null,
+    auth_id uuid references auth.users default auth.uid() not null,
+    app_user_id text unique,
+    created_at timestamp with time zone,
     updated_at timestamp with time zone,
-    user_id text unique default auth.uid() not null,
-    name text not null,
-    profile text,
+    name text not null default ''::text,
+    profile text default ''::text,
     icon_url text,
+    is_active boolean,
 
-    primary key (id),
-    unique(user_id)
-
+    primary key (auth_id),
+    unique(app_user_id)
 );
 
 alter table app_users enable row level security;
@@ -20,11 +21,11 @@ create policy "Public app_users are viewable by everyone."
 
 create policy "Users can insert their own app_users."
     on app_users for insert
-    with check ( auth.uid() = id );
+    with check ( auth.uid() = auth_id );
 
 create policy "Users can update own app_users."
     on app_users for update
-    using ( auth.uid() = id );
+    using ( auth.uid() = auth_id );
 
 -- Set up Realtime!
 begin;
@@ -56,7 +57,7 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public.app_users (id)
+  insert into public.app_users (auth_id)
   values (new.id);
   return new;
 end;
