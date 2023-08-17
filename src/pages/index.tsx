@@ -1,12 +1,12 @@
 import { Box, Flex, Heading, Button, Text } from "@chakra-ui/react";
 
-const Home = () => {
+export const IndexPage = () => {
   return (
     <Flex
       direction="column"
       align="center"
       justify="center"
-      bg="teal.500"
+      bg="#D6BCFA"
       minH="100vh"
       p={8}
     >
@@ -36,5 +36,3 @@ const Home = () => {
     </Flex>
   );
 };
-
-export default Home;
