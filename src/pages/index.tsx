@@ -14,10 +14,10 @@ export const IndexPage = () => {
   const session = useSession();
 
   const handleClickToHome = () => {
-    navigate("/auth/login");
+    navigate("/auth/home");
   };
   const handleClickToSignIn = () => {
-    navigate("/auth/login");
+    navigate("/auth/signin");
   };
 
   return (
@@ -73,11 +73,7 @@ export const IndexPage = () => {
               ログイン画面へ
             </Button>
             <br />
-            <ChakraLink
-              color="teal.500"
-              as={ReactRouterLink}
-              to="/auth/register"
-            >
+            <ChakraLink color="teal.500" as={ReactRouterLink} to="/auth/signup">
               アカウントを作成
             </ChakraLink>
           </div>
