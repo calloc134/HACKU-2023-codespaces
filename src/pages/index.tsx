@@ -7,11 +7,16 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
+import { useSession } from "../supabase";
 
 export const IndexPage = () => {
   const navigate = useNavigate();
+  const session = useSession();
 
-  const handleClick = () => {
+  const handleClickToHome = () => {
+    navigate("/auth/login");
+  };
+  const handleClickToSignIn = () => {
     navigate("/auth/login");
   };
 
@@ -37,21 +42,46 @@ export const IndexPage = () => {
           usotsukey
         </Heading>
         <Text color={"gray.600"}>嘘しかつけないSNS</Text>
-        <Button
-          colorScheme="whiteAlpha"
-          size="lg"
-          mt={4}
-          marginBottom="2"
-          background={"gray.600"}
-          shadow="xs"
-          onClick={handleClick}
-        >
-          ログイン画面へ
-        </Button>
-        <br />
-        <ChakraLink color="teal.500" as={ReactRouterLink} to="/auth/register">
-          アカウントを作成
-        </ChakraLink>
+
+        {/*　ログインしているかで条件分岐 */}
+
+        {session ? (
+          // ログインしている場合
+          <Button
+            colorScheme="whiteAlpha"
+            size="lg"
+            mt={4}
+            marginBottom="2"
+            background={"gray.600"}
+            shadow="xs"
+            onClick={handleClickToHome}
+          >
+            ホームへ
+          </Button>
+        ) : (
+          // ログインしていない場合
+          <div>
+            <Button
+              colorScheme="whiteAlpha"
+              size="lg"
+              mt={4}
+              marginBottom="2"
+              background={"gray.600"}
+              shadow="xs"
+              onClick={handleClickToSignIn}
+            >
+              ログイン画面へ
+            </Button>
+            <br />
+            <ChakraLink
+              color="teal.500"
+              as={ReactRouterLink}
+              to="/auth/register"
+            >
+              アカウントを作成
+            </ChakraLink>
+          </div>
+        )}
       </Box>
     </Flex>
   );
