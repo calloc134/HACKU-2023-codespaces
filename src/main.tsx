@@ -5,6 +5,8 @@ import { IndexPage } from "./pages";
 import { HomePage } from "./pages/home";
 import { HogeIndexPage } from "./pages/hoge";
 import { ChakraProvider } from "@chakra-ui/react";
+import { LoginPage } from "./pages/auth/login";
+import { RegisterPage } from "./pages/auth/register";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -13,7 +15,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<IndexPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/hoge/" Component={HogeIndexPage} />
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
