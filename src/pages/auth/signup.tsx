@@ -23,7 +23,11 @@ export const SignUpPage = () => {
         email: email,
         password: password,
       });
-      if (error) throw error;
+      if (!error) {
+        navigate("/home");
+      } else {
+        throw error;
+      }
     } catch (error) {
       alert(error);
     }
