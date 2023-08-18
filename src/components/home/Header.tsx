@@ -13,6 +13,7 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Heading,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 
@@ -41,12 +42,18 @@ const NavLink = (props: Props) => {
   );
 };
 
-export const WithAction = () => {
+export const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box
+        bg={useColorModeValue("gray.100", "gray.900")}
+        px={4}
+        position="fixed"
+        width="100%"
+        zIndex={100}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -56,7 +63,9 @@ export const WithAction = () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>usotsukey</Box>
+            <Heading as="h5" size="sm">
+              usotsukey
+            </Heading>
             <HStack
               as={"nav"}
               spacing={4}
@@ -86,7 +95,7 @@ export const WithAction = () => {
                 minW={0}
               >
                 <Avatar
-                  size={"sm"}
+                  size={"md"}
                   src={
                     "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
                   }
