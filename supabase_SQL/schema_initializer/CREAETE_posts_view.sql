@@ -1,5 +1,6 @@
 -- postIDが一致するいいねの数を数える
 -- postIDが一致するだまされた数を数える
+-- app_usersとauth_idが一致する条件で結合する
 
 create view post_view as
 select
