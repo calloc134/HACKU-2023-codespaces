@@ -12,11 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-type PostProps = {
-  isOpen: boolean;
-};
-
-export const PostButton = (props: PostProps) => {
+export const PostButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

@@ -16,6 +16,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import { PostButton } from "./Post";
 
 interface Props {
   children: React.ReactNode;
@@ -77,15 +78,8 @@ export const Header = () => {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button
-              variant={"solid"}
-              colorScheme={"teal"}
-              size={"sm"}
-              mr={4}
-              leftIcon={<AddIcon />}
-            >
-              Post
-            </Button>
+            <PostButton />
+
             <Menu>
               <MenuButton
                 as={Button}
