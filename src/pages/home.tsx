@@ -1,4 +1,4 @@
-import { Button, Flex, StackDivider, VStack } from "@chakra-ui/react";
+import { Flex, StackDivider, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
 
@@ -10,12 +10,11 @@ export const HomePage = () => {
         direction="column"
         align="center"
         justify="center"
-        bg="#D6BCFA"
+        bg="white"
         minH="100vh"
         p={8}
         paddingTop="60px"
       >
-        <Button>投稿</Button>
         <VStack
           bg="white"
           marginLeft="auto"
