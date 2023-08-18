@@ -1,27 +1,55 @@
+import { AddIcon } from "@chakra-ui/icons";
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogOverlay,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRef } from "react";
 
 type PostProps = {
   isOpen: boolean;
 };
 
-export const Post = (props: PostProps) => {
+export const PostButton = (props: PostProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
 
   return (
-    <AlertDialog
-      leastDestructiveRef={cancelRef}
-      onClose={onClose}
-      isOpen={props.isOpen}
-    >
-      <AlertDialogOverlay />
-      <AlertDialogContent></AlertDialogContent>
-    </AlertDialog>
+    <>
+      <Button
+        variant={"solid"}
+        colorScheme={"teal"}
+        size={"sm"}
+        mr={4}
+        leftIcon={<AddIcon />}
+        onClick={onOpen}
+      >
+        Post
+      </Button>
+
+      {/* 投稿するときの表示 */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Posting Lies</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Textarea resize="none" placeholder="What lie?" />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3}>
+              Post
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
