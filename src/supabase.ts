@@ -55,6 +55,10 @@ export const fetchPosts = async () => {
 export const sendPost = async (content: string) => {
   // ログイン中のユーザーidを取得
   const user_data = await supabase.auth.getUser();
+
+  // null check
+  if (user_data.data.user == null) return;
+
   const auth_user_id = user_data.data.user.id;
 
   // postsテーブルにレコードを追加する
