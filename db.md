@@ -55,18 +55,16 @@ erDiagram
     }
 
     likes {
-      likes_id bigint PK
-      auth_id uuid FK "Default auth.uid()"
-      post_id bigint FK
+      auth_id uuid PK, FK "Default auth.uid()"
+      post_id bigint PK, FK
       created_at timestamp "with time zone"
       updated_at timestamp "with time zone"
       is_active boolean "デフォルトはtrue"
     }
 
     val_lie {
-      val_lie_id bigint PK
-      auth_id uuid FK "Default auth.uid()"
-      post_id bigint FK
+      auth_id uuid PK, FK "Default auth.uid()"
+      post_id bigint PK, FK
       created_at timestamp "with time zone"
       updated_at timestamp "with time zone"
       is_active boolean "デフォルトはtrue"
@@ -74,7 +72,7 @@ erDiagram
     
 
     post_view {
-      posts_id bigint
+      posts_id bigint PK
       auth_id uuid  "Default auth.uid()"
       created_at timestamp "with time zone"
       updated_at timestamp "with time zone"
@@ -82,7 +80,9 @@ erDiagram
       content text "check (char_length(content) < 200)"
       is_lie boolean
       likes_num integer "default 0"
+      auth_likes int
       val_lie_num integer "default 0"
+      auth_val_lie int
     }
 
 ```
