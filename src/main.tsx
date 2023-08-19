@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { IndexPage } from "./pages";
 import { HomePage } from "./pages/home";
+import { SettingPage } from "./pages/Setting";
 import { ChakraProvider } from "@chakra-ui/react";
 import { LoginPage } from "./pages/auth/login";
 import { RegisterPage } from "./pages/auth/register";
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<IndexPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/setting" element={<SettingPage />} />
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/register" element={<RegisterPage />} />
         </Routes>
