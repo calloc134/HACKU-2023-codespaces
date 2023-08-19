@@ -12,6 +12,7 @@ export const HomePage = () => {
       const data = await fetchPosts();
       console.log(data);
       setPosts(data);
+      console.log(posts);
     };
   });
 
