@@ -1,4 +1,4 @@
-import { Flex, StackDivider, VStack } from "@chakra-ui/react";
+import { Flex, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
 import { useEffect, useState } from "react";
@@ -32,20 +32,56 @@ export const HomePage = () => {
           marginLeft="auto"
           marginRight="auto"
           border="gray.200"
-          divider={<StackDivider borderColor="gray.200" />}
           maxW="70vw"
           minW="70vw"
           minH="100vh"
+          alignItems="center"
         >
-          <PostCard content="a" />
-          <PostCard content="b" />
-          <PostCard content="c" />
-          <PostCard content="a" />
-          <PostCard content="b" />
-          <PostCard content="c" />
-          <PostCard content="a" />
-          <PostCard content="b" />
-          <PostCard content="c" />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="Hello World!"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="b"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="c"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="d"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="e"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="f"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="g"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="h"
+          />
+          <PostCard
+            account_name="hoge hoge"
+            account_id="hoge1234"
+            content="i"
+          />
         </VStack>
       </Flex>
     </>
