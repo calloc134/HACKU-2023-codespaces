@@ -96,7 +96,6 @@ export const Header = () => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
                 <MenuItem>Logout</MenuItem>
