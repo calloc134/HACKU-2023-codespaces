@@ -15,8 +15,7 @@ import {
   Stack,
   Heading,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { PostButton } from "./Post";
+import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 
 interface Props {
   children: React.ReactNode;
@@ -48,13 +47,7 @@ export const Header = () => {
 
   return (
     <>
-      <Box
-        bg={useColorModeValue("gray.100", "gray.900")}
-        px={4}
-        position="fixed"
-        width="100%"
-        zIndex={100}
-      >
+      <Box bg="#D6BCFA" px={4} position="fixed" width="100%" zIndex={100}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -78,8 +71,15 @@ export const Header = () => {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <PostButton />
-
+            <Button
+              variant={"solid"}
+              colorScheme={"teal"}
+              size={"sm"}
+              mr={4}
+              leftIcon={<AddIcon />}
+            >
+              Post
+            </Button>
             <Menu>
               <MenuButton
                 as={Button}
@@ -89,7 +89,7 @@ export const Header = () => {
                 minW={0}
               >
                 <Avatar
-                  size={"md"}
+                  size={"sm"}
                   src={
                     "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
                   }
