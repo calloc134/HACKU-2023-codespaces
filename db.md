@@ -80,9 +80,7 @@ erDiagram
       content text "check (char_length(content) < 200)"
       is_lie boolean
       likes_num integer "default 0"
-      auth_likes int
       val_lie_num integer "default 0"
-      auth_val_lie int
     }
 
 ```
