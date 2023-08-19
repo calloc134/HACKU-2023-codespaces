@@ -50,7 +50,7 @@ export const SignInPage = () => {
         <ArrowBackIcon fontSize="3xl" />
       </Button>
       <Heading mb={4} color={"gray.600"}>
-        ログイン
+        Sign in
       </Heading>
       <EmailInput value={email} onChange={handleEmailChange} />
       <PasswordInput

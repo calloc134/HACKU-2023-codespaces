@@ -50,10 +50,14 @@ export const SignUpPage = () => {
         <ArrowBackIcon fontSize="3xl" />
       </Button>
       <Heading mb={4} color={"gray.600"}>
-        アカウント作成
+        Sign up
       </Heading>
       <EmailInput value={email} onChange={handleEmailChange} />
-      <PasswordInput value={password} onChange={handlePasswordChange} />
+      <PasswordInput
+        label="Create a password"
+        value={password}
+        onChange={handlePasswordChange}
+      />
       <Button
         colorScheme="whiteAlpha"
         size="lg"

@@ -41,7 +41,7 @@ export const IndexPage = () => {
         <Heading mb={4} color={"gray.600"}>
           usotsukey
         </Heading>
-        <Text color={"gray.600"}>嘘しかつけないSNS</Text>
+        <Text color={"gray.600"}>Liar-only SNS</Text>
 
         {/*　ログインしているかで条件分岐 */}
 
@@ -56,7 +56,7 @@ export const IndexPage = () => {
             shadow="xs"
             onClick={handleClickToHome}
           >
-            ホームへ
+            Go to Home
           </Button>
         ) : (
           // ログインしていない場合
@@ -70,11 +70,11 @@ export const IndexPage = () => {
               shadow="xs"
               onClick={handleClickToSignIn}
             >
-              ログイン画面へ
+              Sign in
             </Button>
             <br />
             <ChakraLink color="teal.500" as={ReactRouterLink} to="/auth/signup">
-              アカウントを作成
+              Create a account!
             </ChakraLink>
           </div>
         )}
