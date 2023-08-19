@@ -11,9 +11,22 @@ import {
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { sendPost } from "../../supabase";
 
 export const PostButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [content, setContent] = useState<string>("");
+
+  const handleContentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setContent(event.target.value);
+  };
+  const handlePost = () => {
+    sendPost(content);
+    onClose();
+  };
 
   return (
     <>
@@ -35,11 +48,16 @@ export const PostButton = () => {
           <ModalHeader>Posting Lies</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Textarea resize="none" placeholder="What lie?" />
+            <Textarea
+              resize="none"
+              placeholder="What lie?"
+              value={content}
+              onChange={handleContentChange}
+            />
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button colorScheme="blue" mr={3} onClick={handlePost}>
               Post
             </Button>
             <Button onClick={onClose}>Cancel</Button>
