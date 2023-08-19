@@ -1,8 +1,20 @@
 import { Flex, StackDivider, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
+import { useEffect, useState } from "react";
+import { fetchPosts } from "../supabase";
 
 export const HomePage = () => {
+  const [posts, setPosts] = useState<any[]>();
+
+  useEffect(() => {
+    async () => {
+      const data = await fetchPosts();
+      console.log(data);
+      setPosts(data);
+    };
+  });
+
   return (
     <>
       <Header />
