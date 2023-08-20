@@ -70,19 +70,6 @@ erDiagram
       is_active boolean "デフォルトはtrue"
     }
     
-
-    post_view {
-      posts_id bigint PK
-      auth_id uuid  "Default auth.uid()"
-      created_at timestamp "with time zone"
-      updated_at timestamp "with time zone"
-      is_active boolean "デフォルトはtrue"
-      content text "check (char_length(content) < 200)"
-      is_lie boolean
-      likes_num integer "default 0"
-      val_lie_num integer "default 0"
-    }
-
 ```
 
 
@@ -122,10 +109,9 @@ posts < fake_posts, commentsに分ける
 
 - auth_user: supabaseがもつauth.usersのこと uuid,Email,passeordといった認証に必要な情報を持つ このテーブルを中心として構成されている
 - app_user: アプリケーションがもつユーザー情報 ユーザ名，ユーザが設定可能なユーザID，プロフィール，アイコン画像など
-- posts: 投稿の情報を持つテーブル 新たに投稿を作成する際はこのテーブルにレコードを追加するが，データを取得する際はpost_viewを用いる
+- posts: 投稿の情報を持つテーブル 新たに投稿を作成する際はこのテーブルにレコードを追加するが，データを取得する際はストアドプロシージャを用いる
 - likes: いいねの情報を持つテーブル だれがどの投稿にいいねしたかを持つ．
 - val_lie: だまされたの情報を持つテーブル だれがどの投稿にだまされたを付けたかを持つ．
-- post_view: 投稿の情報を持つテーブル postsテーブルと，そのレコードに紐づくlikesテーブル，val_lieテーブルのレコードの数をそれぞれ数えたビュー ようするにいいね数とだまされた数を持つ
 - comment: コメントの情報を持つテーブル 投稿に対するコメント，コメントに対するコメントをを表現可能．replying_post_id, replying_comment_idのどちらか片方はnullにして対応する．
 
 ## sqlの参考元
