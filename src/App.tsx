@@ -5,6 +5,7 @@ import { SignInPage } from "./pages/auth/signin";
 import { SignUpPage } from "./pages/auth/signup";
 import { HomePage } from "./pages/home";
 import { useSession } from "./supabase";
+import { SettingPage } from "./pages/Setting";
 
 export const App = () => {
   const session = useSession();
@@ -15,6 +16,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<IndexPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/settings" element={<SettingPage />} />
           {!session ? (
             <>
               <Route path="/auth/signin" element={<SignInPage />} />
