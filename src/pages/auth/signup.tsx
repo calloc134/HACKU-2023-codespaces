@@ -1,7 +1,11 @@
 import { Heading, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { CenterBox } from "../../components/CenterBox";
-import { EmailInput, PasswordInput } from "../../components/auth/AuthInput";
+import {
+  EmailInput,
+  PasswordInput,
+  UsernameInput,
+} from "../../components/auth/AuthInput";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { supabase } from "../../supabase";
@@ -9,9 +13,12 @@ import { supabase } from "../../supabase";
 export const SignUpPage = () => {
   const navigate = useNavigate();
 
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setUsername(e.target.value);
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -19,14 +26,36 @@ export const SignUpPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const { error } = await supabase.auth.signUp({
+      // 登録処理
+      const signupQuery = await supabase.auth.signUp({
         email: email,
         password: password,
       });
-      if (!error) {
+
+      // エラーの確認
+      if (signupQuery.error) {
+        throw signupQuery.error;
+      }
+
+      // エラーなしでユーザー名前を登録するように設定
+      const user = await supabase.auth.getUser(); // ログイン中のユーザー情報を取得
+
+      if (user.data.user == null) {
+        alert("エラー");
+        return;
+      }
+
+      const auth_user_id = user.data.user.id;
+      // アプリ側のユーザテーブルのユーザ名を更新する
+      const usernameQuery = await supabase
+        .from("app_users")
+        .update({ name: "YourName" })
+        .eq("auth_id", auth_user_id);
+
+      if (!usernameQuery.error) {
         navigate("/home");
       } else {
-        throw error;
+        throw usernameQuery.error;
       }
     } catch (error) {
       alert(error);
@@ -52,6 +81,7 @@ export const SignUpPage = () => {
       <Heading mb={4} color={"gray.600"}>
         Sign up
       </Heading>
+      <UsernameInput value={username} onChange={handleUsernameChange} />
       <EmailInput value={email} onChange={handleEmailChange} />
       <PasswordInput
         label="Create a password"

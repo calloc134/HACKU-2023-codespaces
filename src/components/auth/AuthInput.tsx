@@ -79,3 +79,23 @@ EmailInput.defaultProps = {
   label: "Enter your email",
   placeholder: "Email",
 };
+
+export const UsernameInput = (props: InputProps) => {
+  return (
+    <FormControl>
+      <FormLabel color={"gray.600"}>{props.label}</FormLabel>
+      <Input
+        type="username"
+        color={"gray.600"}
+        value={props.value}
+        onChange={props.onChange}
+        placeholder={props.placeholder}
+      />
+    </FormControl>
+  );
+};
+
+UsernameInput.defaultProps = {
+  label: "Enter your username",
+  placeholder: "Username",
+};
