@@ -4,6 +4,9 @@ const auth_user_id = user_data.data.user.id;
 
 const post_id = // いいねをつける投稿のid
 
+
+// val_liesも同様である
+
 // 特定の投稿にいいねをつける
 const { error } = await supabase
     .from('likes')

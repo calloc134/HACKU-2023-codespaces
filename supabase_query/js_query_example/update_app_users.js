@@ -7,3 +7,10 @@ const { error } = await supabase
     .from('app_users')
     .update({ name: 'YourName' })
     .eq('auth_id', auth_user_id);
+
+
+// ユーザを論理削除する
+const { error } = await supabase
+    .from('app_users')
+    .update({ is_active: false })
+    .eq('auth_id', auth_user_id);
