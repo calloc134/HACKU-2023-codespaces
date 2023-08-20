@@ -33,7 +33,7 @@ export const PasswordInput = (props: PasswordInputProps) => {
           color={"gray.600"}
           value={props.value}
           onChange={props.onChange}
-          placeholder={props.label}
+          placeholder={props.placeholder}
         />
         {props.showButton ? (
           <InputRightElement>
@@ -55,8 +55,8 @@ export const PasswordInput = (props: PasswordInputProps) => {
 };
 
 PasswordInput.defaultProps = {
-  label: "パスワード",
-  placeholder: "Password",
+  label: "Enter your password",
+  placeholder: "Password?",
   showButton: true,
 };
 
@@ -76,6 +76,26 @@ export const EmailInput = (props: InputProps) => {
 };
 
 EmailInput.defaultProps = {
-  label: "メールアドレス",
+  label: "Enter your email",
   placeholder: "Email",
+};
+
+export const UsernameInput = (props: InputProps) => {
+  return (
+    <FormControl>
+      <FormLabel color={"gray.600"}>{props.label}</FormLabel>
+      <Input
+        type="username"
+        color={"gray.600"}
+        value={props.value}
+        onChange={props.onChange}
+        placeholder={props.placeholder}
+      />
+    </FormControl>
+  );
+};
+
+UsernameInput.defaultProps = {
+  label: "Enter your username",
+  placeholder: "Username",
 };
