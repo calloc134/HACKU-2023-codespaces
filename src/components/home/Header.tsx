@@ -17,14 +17,14 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 
-interface Props {
-  children: React.ReactNode;
-}
+const Links = [
+  { name: "Home", href: "/home" },
+  { name: "Trend", href: "#trend" },
+  { name: "Ranking", href: "#ranking" },
+];
 
-const Links = ["Home", "Trend", "Ranking"];
-
-const NavLink = (props: Props) => {
-  const { children } = props;
+const NavLink = (props: { name: string; href: string }) => {
+  const { name, href } = props;
   return (
     <Box
       as="a"
@@ -35,9 +35,9 @@ const NavLink = (props: Props) => {
         textDecoration: "none",
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
-      href={"#"}
+      href={href}
     >
-      {children}
+      {name}
     </Box>
   );
 };
@@ -66,7 +66,7 @@ export const Header = () => {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} {...link} />
               ))}
             </HStack>
           </HStack>
@@ -110,7 +110,7 @@ export const Header = () => {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} {...link} />
               ))}
             </Stack>
           </Box>
