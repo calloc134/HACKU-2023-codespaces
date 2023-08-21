@@ -146,7 +146,7 @@ export const PostCard = (props: PostCardProps) => {
                 </ModalBody>
                 <ModalFooter>
                   <Button colorScheme="blue" mr={3} onClick={checkAnswers}>
-                    Check Answer
+                    Check
                   </Button>
                   <Button onClick={onClose}>Close</Button>
                 </ModalFooter>
