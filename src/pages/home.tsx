@@ -41,12 +41,12 @@ export const HomePage = () => {
           <PostCard
             account_name="hoge hoge"
             account_id="hoge1234"
-            content="Hello World!"
+            content="こんにちは。<?>これが嘘です。こんばんは。"
           />
           <PostCard
             account_name="hoge hoge"
             account_id="hoge1234"
-            content="b"
+            content="<?>This is Lie.This is Truth.Hello.Goodbye."
           />
           <PostCard
             account_name="hoge hoge"
