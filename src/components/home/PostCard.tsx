@@ -6,7 +6,6 @@ import {
   CardHeader,
   Flex,
   Avatar,
-  IconButton,
   CardBody,
   CardFooter,
   Button,
@@ -47,12 +46,7 @@ export const PostCard = (props: PostCardProps) => {
                   cursor={"pointer"}
                   minW={0}
                 >
-                  <IconButton
-                    variant="ghost"
-                    colorScheme="gray"
-                    aria-label="See menu"
-                    icon={<BsThreeDotsVertical />}
-                  />
+                  <BsThreeDotsVertical />
                 </MenuButton>
                 <MenuList>
                   <MenuItem>Delete</MenuItem>
