@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Checkbox } from "@chakra-ui/react";
 
 type QuizProps = {
@@ -10,10 +10,9 @@ type QuizProps = {
 export const Quiz = (props: QuizProps) => {
   const postText = props.content;
   const sentences = postText.split(/[。.]/).filter((sentence) => sentence);
-  const isLieData = sentences.map((sentence) => sentence.startsWith("<?>"));
   const [answers, setAnswers] = useState(Array(sentences.length).fill(false));
 
-  const handleCheckChange = (index) => {
+  const handleCheckChange = (index: number) => {
     const newAnswers = [...answers];
     newAnswers[index] = !newAnswers[index];
     setAnswers(newAnswers);
