@@ -36,6 +36,7 @@ export const useSession = () => {
  */
 export const signUpAndUpdateUsername = async (
   signUpData: { email: string; password: string },
+  app_user_id: string,
   username: string,
 ) => {
   try {
@@ -59,7 +60,7 @@ export const signUpAndUpdateUsername = async (
     // アプリ側のユーザテーブルのユーザ名を更新する
     const usernameQuery = await supabase
       .from("app_users")
-      .update({ name: username })
+      .update({ name: username, app_user_id: app_user_id })
       .eq("auth_id", auth_user_id);
 
     if (!usernameQuery.error) {

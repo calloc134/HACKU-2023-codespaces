@@ -28,6 +28,7 @@ export const SignUpPage = () => {
     const result = await signUpAndUpdateUsername(
       { email: email, password: password },
       username,
+      username,
     );
 
     if (result) {
