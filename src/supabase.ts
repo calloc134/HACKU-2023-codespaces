@@ -126,6 +126,10 @@ export const sendPost = async (content: string) => {
       .from("posts")
       .insert({ auth_id: auth_user_id, content: content });
     // 嘘判定の結果をどうするかはまだ未定のため省略
+
+    if (error) {
+      throw error;
+    }
   } catch (error) {
     alert(error);
   }
