@@ -23,6 +23,7 @@ import {
   ModalFooter,
   useDisclosure,
   useToast,
+  Textarea,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiLike, BiChat, BiShare } from "react-icons/bi";
@@ -38,6 +39,12 @@ type PostCardProps = {
 
 export const PostCard = (props: PostCardProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isReplyOpen,
+    onOpen: onReplyOpen,
+    onClose: onReplyClose,
+  } = useDisclosure();
+
   const toast = useToast();
 
   const sentences = props.content.split(/[。.]/).filter((sentence) => sentence);
@@ -124,7 +131,28 @@ export const PostCard = (props: PostCardProps) => {
             }}
           >
             <Button flex="1" variant="ghost" leftIcon={<BiLike />}></Button>
-            <Button flex="1" variant="ghost" leftIcon={<BiChat />}></Button>
+            <Button
+              flex="1"
+              variant="ghost"
+              leftIcon={<BiChat />}
+              onClick={onReplyOpen}
+            ></Button>
+            <Modal isOpen={isReplyOpen} onClose={onReplyClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Reply</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Textarea placeholder="Write your reply here..." />
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3}>
+                    Send
+                  </Button>
+                  <Button onClick={onReplyClose}>Close</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
             <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"
