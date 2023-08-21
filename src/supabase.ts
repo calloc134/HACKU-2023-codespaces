@@ -99,7 +99,6 @@ export const fetchPosts = async () => {
       // ここでエラーハンドリング
       alert(error.message);
     } else {
-      console.log("data" + data);
       return data;
     }
   } catch (error) {

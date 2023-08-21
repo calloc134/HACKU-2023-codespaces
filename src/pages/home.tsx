@@ -10,10 +10,9 @@ export const HomePage = () => {
   useEffect(() => {
     const asyncTask = async () => {
       const data = await fetchPosts();
-      setPosts(data);
 
-      if (posts) {
-        console.log(posts[0]);
+      if (data) {
+        setPosts(data);
       }
     };
     asyncTask();
