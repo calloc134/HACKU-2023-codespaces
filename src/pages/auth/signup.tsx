@@ -8,7 +8,7 @@ import {
 } from "../../components/auth/AuthInput";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { supabase } from "../../supabase";
+import { signUpAndUpdateUsername, supabase } from "../../supabase";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -25,40 +25,13 @@ export const SignUpPage = () => {
     setPassword(e.target.value);
 
   const handleSubmit = async () => {
-    try {
-      // 登録処理
-      const signupQuery = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      });
+    const result = await signUpAndUpdateUsername(
+      { email: email, password: password },
+      username,
+    );
 
-      // エラーの確認
-      if (signupQuery.error) {
-        throw signupQuery.error;
-      }
-
-      // エラーなしでユーザー名前を登録するように設定
-      const user = await supabase.auth.getUser(); // ログイン中のユーザー情報を取得
-
-      if (user.data.user == null) {
-        alert("エラー");
-        return;
-      }
-
-      const auth_user_id = user.data.user.id;
-      // アプリ側のユーザテーブルのユーザ名を更新する
-      const usernameQuery = await supabase
-        .from("app_users")
-        .update({ name: "YourName" })
-        .eq("auth_id", auth_user_id);
-
-      if (!usernameQuery.error) {
-        navigate("/home");
-      } else {
-        throw usernameQuery.error;
-      }
-    } catch (error) {
-      alert(error);
+    if (result) {
+      navigate("/");
     }
   };
 
