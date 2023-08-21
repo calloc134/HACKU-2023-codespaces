@@ -8,12 +8,15 @@ export const HomePage = () => {
   const [posts, setPosts] = useState<any[]>();
 
   useEffect(() => {
-    async () => {
+    const asyncTask = async () => {
       const data = await fetchPosts();
-      console.log(data);
       setPosts(data);
-      console.log(posts);
+
+      if (posts) {
+        console.log(posts[0]);
+      }
     };
+    asyncTask();
   });
 
   return (
@@ -38,51 +41,16 @@ export const HomePage = () => {
           minH="100vh"
           alignItems="center"
         >
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="Hello World!"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="b"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="c"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="d"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="e"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="f"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="g"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="h"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="i"
-          />
+          {posts &&
+            posts.map((post) => {
+              return (
+                <PostCard
+                  account_id={post.app_user_id}
+                  account_name={post.name}
+                  content={post.content}
+                />
+              );
+            })}
         </VStack>
       </Flex>
     </>
