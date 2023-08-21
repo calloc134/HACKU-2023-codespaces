@@ -15,9 +15,8 @@ import {
   Stack,
   Heading,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { supabase } from "../../supabase";
-import { useNavigate } from "react-router-dom";
 import { PostButton } from "./Post";
 
 const Links = [
