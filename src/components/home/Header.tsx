@@ -16,6 +16,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase";
 import { PostButton } from "./Post";
 
@@ -49,6 +50,11 @@ export const Header = () => {
 
   const handleSignOut = () => {
     supabase.auth.signOut();
+  };
+
+  const navigate = useNavigate();
+  const handleSettingClick = () => {
+    navigate("/settings");
   };
 
   return (
@@ -94,7 +100,7 @@ export const Header = () => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem as="a" href="/settings">
+                <MenuItem as="a" onClick={handleSettingClick}>
                   Settings
                 </MenuItem>
                 <MenuDivider />

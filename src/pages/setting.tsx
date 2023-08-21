@@ -15,8 +15,13 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 export const SettingPage = () => {
+  const navigate = useNavigate();
+  const handleHomeClick = () => {
+    navigate("/home");
+  };
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} bg="#D6BCFA">
       <Stack
@@ -88,6 +93,7 @@ export const SettingPage = () => {
             _hover={{
               bg: "red.500",
             }}
+            onClick={handleHomeClick}
           >
             Cancel
           </Button>
