@@ -22,7 +22,7 @@ export const App = () => {
             </>
           ) : (
             <>
-              <Route path="/setting" element={<SettingPage />} />
+              <Route path="/settings" element={<SettingPage />} />
               <Route path="/home" element={<HomePage />} />
             </>
           )}
