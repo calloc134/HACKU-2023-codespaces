@@ -8,7 +8,7 @@ import {
 } from "../../components/auth/AuthInput";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { signUpAndUpdateUsername, supabase } from "../../supabase";
+import { signUpAndUpdateUsername } from "../../supabase";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
