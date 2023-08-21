@@ -1,18 +1,18 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchPosts } from "../supabase";
 
 export const HomePage = () => {
-  const [posts, setPosts] = useState<any[]>();
+  const posts = useRef<any[]>();
 
   useEffect(() => {
     const asyncTask = async () => {
       const data = await fetchPosts();
 
       if (data) {
-        setPosts(data);
+        posts.current = data;
       }
     };
     asyncTask();
@@ -40,8 +40,8 @@ export const HomePage = () => {
           minH="100vh"
           alignItems="center"
         >
-          {posts &&
-            posts.map((post) => {
+          {posts.current &&
+            posts.current.map((post) => {
               return (
                 <PostCard
                   account_id={post.app_user_id}
