@@ -6,16 +6,20 @@ import { fetchPosts } from "../supabase";
 
 export const HomePage = () => {
   const posts = useRef<any[]>();
+  const [startedFetch, setStartFetch] = useState(false);
 
   useEffect(() => {
-    const asyncTask = async () => {
-      const data = await fetchPosts();
+    if (!posts.current && !startedFetch) {
+      setStartFetch(true);
+      const asyncTask = async () => {
+        const data = await fetchPosts();
 
-      if (data) {
-        posts.current = data;
-      }
-    };
-    asyncTask();
+        if (data) {
+          posts.current = data;
+        }
+      };
+      asyncTask();
+    }
   });
 
   return (
