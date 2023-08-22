@@ -38,3 +38,6 @@ $ npm run dev
 - [ibukani](https://github.com/ibukani)
 - [wasan22123](https://github.com/wasan22123)
 - [suzuha1101](https://github.com/suzuha1101)
+
+## 別リポジトリ
+[koiruka-judgejun-2023](https://github.com/neruneruna7/koiruka-judgejun-2023) 
