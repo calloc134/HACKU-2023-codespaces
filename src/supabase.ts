@@ -34,15 +34,17 @@ export const useSession = () => {
  * @returns
  */
 export const fetchPosts = async () => {
+  console.log("fetchPosts called");
   const { data, error } = await supabase
-    .from("posts_view")
-    .select("*")
+    .rpc("get_posts")
     .order("created_at", { ascending: false })
     .limit(100);
 
   if (error) {
     throw error;
   }
+
+  console.log(data);
 
   return data;
 };
