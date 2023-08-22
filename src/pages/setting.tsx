@@ -87,24 +87,14 @@ export const SettingPage = () => {
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
           <Button
-            bg={"red.400"}
-            color={"white"}
+            colorScheme="blue"
+            variant="outline"
             w="full"
-            _hover={{
-              bg: "red.500",
-            }}
             onClick={handleHomeClick}
           >
             Cancel
           </Button>
-          <Button
-            bg={"blue.400"}
-            color={"white"}
-            w="full"
-            _hover={{
-              bg: "blue.500",
-            }}
-          >
+          <Button colorScheme="blue" variant="solid" w="full">
             Submit
           </Button>
         </Stack>
