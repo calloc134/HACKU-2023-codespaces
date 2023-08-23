@@ -55,6 +55,7 @@ export const HomePage = () => {
           {posts.map((post) => {
             return (
               <PostCard
+                key={post.id}
                 account_id={post.app_user_id}
                 account_name={post.name}
                 content={post.content}

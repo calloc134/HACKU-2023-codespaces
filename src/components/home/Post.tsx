@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   Textarea,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { sendPost } from "../../supabase";
@@ -17,6 +18,7 @@ import { sendPost } from "../../supabase";
 export const PostButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [content, setContent] = useState<string>("");
+  const toast = useToast();
 
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -27,6 +29,13 @@ export const PostButton = () => {
     sendPost(content);
     setContent("");
     onClose();
+    toast({
+      title: "Success",
+      description: "Your post has been sent.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (
