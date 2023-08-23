@@ -68,3 +68,23 @@ export const sendPost = async (content: string) => {
     .insert({ auth_id: auth_user_id, content: content });
   // 嘘判定の結果をどうするかはまだ未定のため省略
 };
+
+const realtime_posts_insert_detection = async () => {
+  supabase
+    .channel("*")
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "posts",
+      },
+      (payload) => {
+        if (payload.eventType == "INSERT") {
+          console.log("投稿追加後のデータ", payload.new);
+          console.log("投稿追加前のデータ", payload.old);
+        }
+      },
+    )
+    .subscribe();
+};

@@ -231,6 +231,7 @@ export interface Database {
           is_lie: boolean;
           name: string;
           app_user_id: string;
+          icon_url: string;
           likes_num: number;
           liked: boolean;
           val_lies_num: number;
