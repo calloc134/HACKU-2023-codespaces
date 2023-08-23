@@ -1,7 +1,8 @@
 import { createClient, Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
+import { Database } from "../types/supabase";
 
-export const supabase = createClient(
+export const supabase = createClient<Database>(
   "https://rphpgdwfvgbqodprwhbo.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwaHBnZHdmdmdicW9kcHJ3aGJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE4NDU4NTEsImV4cCI6MjAwNzQyMTg1MX0.Rni5vkoj06n16aobQ3uuz-Id2A09a4GEPCx6EkzZLgs",
 );
@@ -33,15 +34,17 @@ export const useSession = () => {
  * @returns
  */
 export const fetchPosts = async () => {
+  console.log("fetchPosts called");
   const { data, error } = await supabase
-    .from("posts_view")
-    .select("*")
+    .rpc("get_posts")
     .order("created_at", { ascending: false })
     .limit(100);
 
   if (error) {
     throw error;
   }
+
+  console.log(data);
 
   return data;
 };
