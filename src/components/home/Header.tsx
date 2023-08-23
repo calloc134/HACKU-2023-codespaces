@@ -20,17 +20,10 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase";
 import { PostButton } from "./Post";
 
-const Links = [
-  { name: "Home", href: "/home" },
-  { name: "Trend", href: "#trend" },
-  { name: "Ranking", href: "#ranking" },
-];
-
-const NavLink = (props: { name: string; href: string }) => {
+const NavLink = (props: { name: string; href: () => void }) => {
   const { name, href } = props;
   return (
-    <Box
-      as="a"
+    <Button
       px={2}
       py={1}
       rounded={"md"}
@@ -38,10 +31,12 @@ const NavLink = (props: { name: string; href: string }) => {
         textDecoration: "none",
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
-      href={href}
+      onClick={href}
+      bg="#D6BCFA"
+      color={useColorModeValue("gray.800", "white")} // 文字色を設定
     >
       {name}
-    </Box>
+    </Button>
   );
 };
 
@@ -56,6 +51,23 @@ export const Header = () => {
   const handleSettingClick = () => {
     navigate("/settings");
   };
+  const handleHomeClick = () => {
+    navigate("/home");
+  };
+
+  const handleTrendClick = () => {
+    navigate("/trend"); // 例: トレンドページへの遷移
+  };
+
+  const handleRankingClick = () => {
+    navigate("/ranking"); // 例: ランキングページへの遷移
+  };
+
+  const Links = [
+    { name: "Home", href: handleHomeClick },
+    { name: "Trend", href: handleTrendClick }, // Trendへのクリックハンドラを追加
+    { name: "Ranking", href: handleRankingClick }, // Rankingへのクリックハンドラを追加
+  ];
 
   return (
     <>

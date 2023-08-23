@@ -10,11 +10,8 @@ import {
   Stack,
   useColorModeValue,
   Avatar,
-  AvatarBadge,
-  IconButton,
   Center,
 } from "@chakra-ui/react";
-import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
 export const SettingPage = () => {
@@ -44,17 +41,7 @@ export const SettingPage = () => {
               <Avatar
                 size="xl"
                 src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-              >
-                <AvatarBadge
-                  as={IconButton}
-                  size="sm"
-                  rounded="full"
-                  top="-10px"
-                  colorScheme="red"
-                  aria-label="remove Image"
-                  icon={<SmallCloseIcon />}
-                />
-              </Avatar>
+              ></Avatar>
             </Center>
             <Center w="full">
               <Button w="full">Change Icon</Button>

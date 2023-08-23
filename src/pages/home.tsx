@@ -1,26 +1,33 @@
-import { Flex, VStack } from "@chakra-ui/react";
+import { Flex, VStack, Button } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchPosts } from "../supabase";
 
 export const HomePage = () => {
-  const posts = useRef<any[]>();
+  const [posts, setPosts] = useState<any[]>([]);
   const [startedFetch, setStartFetch] = useState(false);
 
   useEffect(() => {
-    if (!posts.current && !startedFetch) {
+    if (!startedFetch) {
       setStartFetch(true);
       const asyncTask = async () => {
         const data = await fetchPosts();
 
         if (data) {
-          posts.current = data;
+          setPosts(data); // 状態を更新
         }
       };
       asyncTask();
     }
-  });
+  }, [startedFetch]);
+
+  const handleFetchPosts = async () => {
+    const data = await fetchPosts();
+    if (data) {
+      setPosts(data); // ボタンクリックで投稿データを再取得
+    }
+  };
 
   return (
     <>
@@ -44,16 +51,16 @@ export const HomePage = () => {
           minH="100vh"
           alignItems="center"
         >
-          {posts.current &&
-            posts.current.map((post) => {
-              return (
-                <PostCard
-                  account_id={post.app_user_id}
-                  account_name={post.name}
-                  content={post.content}
-                />
-              );
-            })}
+          <Button onClick={handleFetchPosts}>Get Posts</Button>
+          {posts.map((post) => {
+            return (
+              <PostCard
+                account_id={post.app_user_id}
+                account_name={post.name}
+                content={post.content}
+              />
+            );
+          })}
         </VStack>
       </Flex>
     </>
