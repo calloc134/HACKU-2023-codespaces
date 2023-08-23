@@ -15,8 +15,13 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 export const SettingPage = () => {
+  const navigate = useNavigate();
+  const handleHomeClick = () => {
+    navigate("/home");
+  };
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} bg="#D6BCFA">
       <Stack
@@ -82,23 +87,14 @@ export const SettingPage = () => {
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
           <Button
-            bg={"red.400"}
-            color={"white"}
+            colorScheme="blue"
+            variant="outline"
             w="full"
-            _hover={{
-              bg: "red.500",
-            }}
+            onClick={handleHomeClick}
           >
             Cancel
           </Button>
-          <Button
-            bg={"blue.400"}
-            color={"white"}
-            w="full"
-            _hover={{
-              bg: "blue.500",
-            }}
-          >
+          <Button colorScheme="blue" variant="solid" w="full">
             Submit
           </Button>
         </Stack>

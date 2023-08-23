@@ -25,6 +25,7 @@ export const PostButton = () => {
   };
   const handlePost = () => {
     sendPost(content);
+    setContent("");
     onClose();
   };
 

@@ -1,19 +1,25 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchPosts } from "../supabase";
 
 export const HomePage = () => {
-  const [posts, setPosts] = useState<any[]>();
+  const posts = useRef<any[]>();
+  const [startedFetch, setStartFetch] = useState(false);
 
   useEffect(() => {
-    async () => {
-      const data = await fetchPosts();
-      console.log(data);
-      setPosts(data);
-      console.log(posts);
-    };
+    if (!posts.current && !startedFetch) {
+      setStartFetch(true);
+      const asyncTask = async () => {
+        const data = await fetchPosts();
+
+        if (data) {
+          posts.current = data;
+        }
+      };
+      asyncTask();
+    }
   });
 
   return (
@@ -38,51 +44,16 @@ export const HomePage = () => {
           minH="100vh"
           alignItems="center"
         >
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="こんにちは。<?>これが嘘です。こんばんは。"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="<?>This is Lie.This is Truth.Hello.Goodbye."
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="c"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="d"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="e"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="f"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="g"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="h"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="i"
-          />
+          {posts.current &&
+            posts.current.map((post) => {
+              return (
+                <PostCard
+                  account_id={post.app_user_id}
+                  account_name={post.name}
+                  content={post.content}
+                />
+              );
+            })}
         </VStack>
       </Flex>
     </>

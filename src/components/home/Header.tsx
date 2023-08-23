@@ -15,7 +15,10 @@ import {
   Stack,
   Heading,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabase";
+import { PostButton } from "./Post";
 
 const Links = [
   { name: "Home", href: "/home" },
@@ -45,6 +48,15 @@ const NavLink = (props: { name: string; href: string }) => {
 export const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const handleSignOut = () => {
+    supabase.auth.signOut();
+  };
+
+  const navigate = useNavigate();
+  const handleSettingClick = () => {
+    navigate("/settings");
+  };
+
   return (
     <>
       <Box bg="#D6BCFA" px={4} position="fixed" width="100%" zIndex={100}>
@@ -71,15 +83,7 @@ export const Header = () => {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button
-              variant={"solid"}
-              colorScheme={"teal"}
-              size={"sm"}
-              mr={4}
-              leftIcon={<AddIcon />}
-            >
-              Post
-            </Button>
+            <PostButton />
             <Menu>
               <MenuButton
                 as={Button}
@@ -96,11 +100,11 @@ export const Header = () => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem as="a" href="/setting">
+                <MenuItem as="a" onClick={handleSettingClick}>
                   Settings
                 </MenuItem>
                 <MenuDivider />
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={handleSignOut}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
