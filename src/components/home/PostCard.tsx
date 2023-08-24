@@ -22,16 +22,20 @@ import {
   ModalFooter,
   useDisclosure,
   useToast,
-  Textarea,
+  VStack,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiLike, BiChat, BiShare } from "react-icons/bi";
+import { BiLike, BiShare } from "react-icons/bi";
 import { AiOutlineAim, AiOutlineExclamationCircle } from "react-icons/ai";
 import { Quiz } from "./Liequiz";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { PostCardComment } from "./post_cord/PostCordComment";
+import { CommentButton } from "./post_cord/CommentButton";
+import { fetchPostComments } from "../../supabase";
 
 type PostCardProps = {
   key: Int8Array;
+  post_id: number;
   content: string;
   account_name: string;
   account_id: string;
@@ -39,12 +43,10 @@ type PostCardProps = {
 };
 
 export const PostCard = (props: PostCardProps) => {
+  const [comments, setComments] = useState<any[] | undefined>([]);
+  const [startedFetch, setStartFetch] = useState(false);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isReplyOpen,
-    onOpen: onReplyOpen,
-    onClose: onReplyClose,
-  } = useDisclosure();
 
   const toast = useToast();
 
@@ -88,6 +90,21 @@ export const PostCard = (props: PostCardProps) => {
       isClosable: true,
     });
   };
+
+  useEffect(() => {
+    if (!startedFetch) {
+      setStartFetch(true);
+      const asyncTask = async () => {
+        const data = await fetchPostComments(props.post_id);
+
+        if (data) {
+          setComments(data); // 状態を更新
+        }
+      };
+      asyncTask();
+    }
+  }, [startedFetch]);
+
   return (
     <Flex justify="center">
       <Box width="600px">
@@ -130,28 +147,7 @@ export const PostCard = (props: PostCardProps) => {
             }}
           >
             <Button flex="1" variant="ghost" leftIcon={<BiLike />}></Button>
-            <Button
-              flex="1"
-              variant="ghost"
-              leftIcon={<BiChat />}
-              onClick={onReplyOpen}
-            ></Button>
-            <Modal isOpen={isReplyOpen} onClose={onReplyClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Reply</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <Textarea placeholder="Write your reply here..." />
-                </ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3}>
-                    Send
-                  </Button>
-                  <Button onClick={onReplyClose}>Close</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+            <CommentButton post_id={props.post_id} />
             <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"
@@ -186,6 +182,21 @@ export const PostCard = (props: PostCardProps) => {
             ></Button>
           </CardFooter>
         </Card>
+
+        {/* ここからコメントエリア */}
+        <VStack marginLeft="auto" marginRight="auto" width="100%" spacing="0px">
+          {comments &&
+            comments.map((comment) => {
+              return (
+                <PostCardComment
+                  content={comment.content}
+                  account_id={props.account_id}
+                  account_name={props.account_name}
+                  icon_url={props.icon_url}
+                />
+              );
+            })}
+        </VStack>
       </Box>
     </Flex>
   );

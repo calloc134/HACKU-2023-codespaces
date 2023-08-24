@@ -13,7 +13,6 @@ export const HomePage = () => {
       setStartFetch(true);
       const asyncTask = async () => {
         const data = await fetchPosts();
-        console.log(data);
 
         if (data) {
           setPosts(data); // 状態を更新
@@ -57,6 +56,7 @@ export const HomePage = () => {
             return (
               <PostCard
                 key={post.post_id}
+                post_id={post.post_id}
                 account_id={post.app_user_id}
                 account_name={post.name}
                 content={post.content}

@@ -120,3 +120,50 @@ export const sendPost = async (content: string) => {
     alert(error);
   }
 };
+
+export const sendPostComment = async (
+  replying_post_id: number,
+  content: string,
+) => {
+  try {
+    const user = await getUser();
+
+    if (user == null) return;
+
+    const auth_user_id = user.id;
+
+    const { error } = await supabase.from("comments").insert([
+      {
+        replying_post_id: replying_post_id, //大本の投稿のid
+        auth_id: auth_user_id,
+        content: content,
+      },
+    ]);
+    // 嘘判定の結果をどうするかはまだ未定のため省略
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const fetchPostComments = async (post_id: number) => {
+  try {
+    // 特定の投稿に対するコメント一覧を取得する
+    const { data, error } = await supabase
+      .from("comments")
+      .select("*")
+      .eq("replying_post_id", post_id);
+
+    if (error) {
+      alert(error.message);
+    } else {
+      return data;
+    }
+  } catch (error) {
+    alert("a");
+  }
+  // 特定の投稿に対するコメント一覧を取得する
+};
