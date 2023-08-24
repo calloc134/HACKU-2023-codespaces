@@ -31,9 +31,11 @@ import { Quiz } from "./Liequiz";
 import { useState } from "react";
 
 type PostCardProps = {
+  key: Int8Array;
   content: string;
   account_name: string;
   account_id: string;
+  icon_url: string;
 };
 
 export const PostCard = (props: PostCardProps) => {
@@ -46,7 +48,10 @@ export const PostCard = (props: PostCardProps) => {
 
   const toast = useToast();
 
-  const sentences = props.content.split(/[。.]/).filter((sentence) => sentence);
+  const sentences =
+    typeof props.content === "string"
+      ? props.content.split(/[。.]/).filter((sentence) => sentence)
+      : [];
   const isLieData = sentences.map((sentence) => sentence.startsWith("<?>"));
   const [answers, setAnswers] = useState(Array(sentences.length).fill(false));
 
@@ -90,7 +95,7 @@ export const PostCard = (props: PostCardProps) => {
           <CardHeader>
             <Flex gap="4">
               <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                <Avatar src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" />
+                <Avatar src={props.icon_url} />
                 <Box>
                   <Heading size="sm">{props.account_name}</Heading>
                   <Text>{props.account_id}</Text>
