@@ -29,6 +29,7 @@ import { BiLike, BiShare } from "react-icons/bi";
 import { AiOutlineAim, AiOutlineExclamationCircle } from "react-icons/ai";
 import { Quiz } from "./Liequiz";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { PostCardComment } from "./post_cord/PostCordComment";
 import { CommentButton } from "./post_cord/CommentButton";
 import { fetchPostComments } from "../../supabase";
@@ -89,6 +90,35 @@ export const PostCard = (props: PostCardProps) => {
       duration: 3000,
       isClosable: true,
     });
+  };
+
+  const handleFakeCheckClick = async () => {
+    try {
+      const response = await axios.post(
+        "https://koiruka-judgejun-2023.shuttleapp.rs/fake_check",
+        {
+          my_app_key: "xfcfk3zta29wxihw553y",
+          content: props.content,
+        },
+      );
+      const { true_percent, description } = response.data.chatgpt_response; // chatgpt_response オブジェクトからデータを抽出
+      toast({
+        title: "Fake Check Result",
+        description: `True Percent: ${true_percent}%, Description: ${description}`,
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "An error occurred while checking fake content.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   useEffect(() => {
@@ -179,6 +209,7 @@ export const PostCard = (props: PostCardProps) => {
               flex="1"
               variant="ghost"
               leftIcon={<AiOutlineExclamationCircle />}
+              onClick={handleFakeCheckClick}
             ></Button>
           </CardFooter>
         </Card>
