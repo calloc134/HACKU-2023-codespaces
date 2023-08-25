@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { postsState } from "./Atoms";
 import { useState, useEffect } from "react";
 import { fetchPosts } from "../supabase";

@@ -196,6 +196,21 @@ export const fetchPostComments = async (post_id: number) => {
   // 特定の投稿に対するコメント一覧を取得する
 };
 
+export const deletePostComments = async (comment_id: number) => {
+  try {
+    const { error } = await supabase
+      .from("comments")
+      .update({ is_active: false })
+      .eq("comment_id", comment_id);
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    alert(error);
+  }
+};
+
 export const likePost = async (post_id: number, active: boolean) => {
   try {
     const user = await getUser();

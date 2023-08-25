@@ -13,16 +13,47 @@ import {
   CardBody,
   Box,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { deletePostComments, getUser } from "../../../supabase";
+
+interface ReloadFunction {
+  (): void;
+}
 
 type PostCardCommentProps = {
+  comment_id: number;
+  auth_id: string;
   content: string;
   account_name: string;
   account_id: string;
   icon_url: string;
+  reloadComments: ReloadFunction;
 };
 
 export const PostCardComment = (props: PostCardCommentProps) => {
+  const [isCurrentUserComment, setCurrentUserComment] = useState(false);
+
+  // 消去する関数
+  const handleDelete = async () => {
+    await deletePostComments(props.comment_id);
+    props.reloadComments();
+  };
+
+  // コメントの投稿主であるかの確認
+  useEffect(() => {
+    const asyncTask = async () => {
+      const user = await getUser();
+
+      if (!user) return;
+
+      if (user.id == props.auth_id) {
+        setCurrentUserComment(true);
+      }
+    };
+    asyncTask();
+  });
+
   return (
     <Card maxW="full" minW="full" size="sm">
       <CardHeader>
@@ -34,20 +65,22 @@ export const PostCardComment = (props: PostCardCommentProps) => {
               <Text>{props.account_id}</Text>
             </Box>
           </Flex>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              minW={0}
-            >
-              <BsThreeDotsVertical />
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Delete</MenuItem>
-            </MenuList>
-          </Menu>
+          {isCurrentUserComment && (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                minW={0}
+              >
+                <BsThreeDotsVertical />
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleDelete}>Delete</MenuItem>
+              </MenuList>
+            </Menu>
+          )}
         </Flex>
       </CardHeader>
       <CardBody>
