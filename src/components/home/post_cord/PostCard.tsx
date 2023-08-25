@@ -25,24 +25,29 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiLike, BiShare } from "react-icons/bi";
 import { AiOutlineAim, AiOutlineExclamationCircle } from "react-icons/ai";
-import { Quiz } from "./Liequiz";
+import { Quiz } from "../Liequiz";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PostCardComment } from "./post_cord/PostCordComment";
-import { CommentButton } from "./post_cord/CommentButton";
-import { fetchPostComments } from "../../supabase";
-import { postsState } from "../../utils/Atoms";
+import { PostCardComment } from "./PostCordComment";
+import { CommentButton } from "./Comment";
+import { fetchPostComments } from "../../../supabase";
+import { postsState } from "../../../utils/Atoms";
 import { useRecoilValue } from "recoil";
+import { LikeButton } from "./Like";
 
 type PostCardProps = {
   key: Int8Array;
   post_id: number;
+  // 投稿内容
   content: string;
+  // 投稿したユーザーの情報
   account_name: string;
   account_id: string;
   icon_url: string;
+  // いいね関連
+  likes_number: number;
+  liked: boolean;
 };
 
 export const PostCard = (props: PostCardProps) => {
@@ -175,7 +180,11 @@ export const PostCard = (props: PostCardProps) => {
               },
             }}
           >
-            <Button flex="1" variant="ghost" leftIcon={<BiLike />}></Button>
+            <LikeButton
+              post_id={props.post_id}
+              likes={props.likes_number}
+              pressed={props.liked}
+            />
             <CommentButton
               post_id={props.post_id}
               reloadComments={async () => {
@@ -186,7 +195,6 @@ export const PostCard = (props: PostCardProps) => {
                 }
               }}
             />
-            <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"
               variant="ghost"
