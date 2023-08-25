@@ -264,7 +264,6 @@ export const PostCard = (props: PostCardProps) => {
         <VStack marginLeft="auto" marginRight="auto" width="100%" spacing="0px">
           {comments &&
             comments.map((comment) => {
-              console.log(comment);
               return (
                 <PostCardComment
                   comment_id={comment.comment_id}
