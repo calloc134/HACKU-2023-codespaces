@@ -82,6 +82,11 @@ export const signUpAndUpdateUsername = async (
   }
 };
 
+export const singOut = async () => {
+  supabase.auth.signOut();
+  cachedUserData = null;
+};
+
 export const fetchPosts = async () => {
   try {
     const user = await getUser();
@@ -189,6 +194,26 @@ export const fetchPostComments = async (post_id: number) => {
     alert(error);
   }
   // 特定の投稿に対するコメント一覧を取得する
+};
+
+export const likePost = async (post_id: number, active: boolean) => {
+  try {
+    const user = await getUser();
+
+    if (user == null) return;
+
+    const auth_user_id = user.id;
+
+    const { error } = await supabase
+      .from("likes")
+      .upsert({ auth_id: auth_user_id, post_id: post_id, is_active: active });
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    alert(error);
+  }
 };
 
 export const realtime_posts_insert_detection = async () => {

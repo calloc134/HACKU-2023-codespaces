@@ -1,5 +1,5 @@
 import { Flex, VStack } from "@chakra-ui/react";
-import { PostCard } from "../components/home/PostCard";
+import { PostCard } from "../components/home/post_cord/PostCard";
 import { Header } from "../components/home/Header";
 import { useRecoilValue } from "recoil";
 import { postsState } from "../utils/Atoms";
@@ -35,6 +35,7 @@ export const HomePage = () => {
         >
           {posts &&
             posts.map((post) => {
+              console.log(post);
               return (
                 <PostCard
                   key={post.post_id}
@@ -44,6 +45,8 @@ export const HomePage = () => {
                   account_name={post.name}
                   content={post.content}
                   icon_url={post.icon_url}
+                  likes_number={post.likes_num}
+                  liked={post.liked}
                 />
               );
             })}
