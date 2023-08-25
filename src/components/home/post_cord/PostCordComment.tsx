@@ -34,12 +34,13 @@ type PostCardCommentProps = {
 export const PostCardComment = (props: PostCardCommentProps) => {
   const [isCurrentUserComment, setCurrentUserComment] = useState(false);
 
+  // 消去する関数
   const handleDelete = async () => {
     await deletePostComments(props.comment_id);
     props.reloadComments();
   };
 
-  // 投稿主であるかの確認
+  // コメントの投稿主であるかの確認
   useEffect(() => {
     const asyncTask = async () => {
       const user = await getUser();
@@ -64,20 +65,22 @@ export const PostCardComment = (props: PostCardCommentProps) => {
               <Text>{props.account_id}</Text>
             </Box>
           </Flex>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              minW={0}
-            >
-              <BsThreeDotsVertical />
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Delete</MenuItem>
-            </MenuList>
-          </Menu>
+          {isCurrentUserComment && (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                minW={0}
+              >
+                <BsThreeDotsVertical />
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleDelete}>Delete</MenuItem>
+              </MenuList>
+            </Menu>
+          )}
         </Flex>
       </CardHeader>
       <CardBody>
