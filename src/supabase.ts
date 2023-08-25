@@ -1,8 +1,7 @@
-import { createClient, Session, User } from "@supabase/supabase-js";
-import { useEffect, useRef, useState } from "react";
+import { createClient, User } from "@supabase/supabase-js";
+import { useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { sessionState } from "./utils/Atoms";
-import { list } from "@chakra-ui/react";
 import { Database } from "../types/supabase";
 
 export const supabase = createClient<Database>(
@@ -98,7 +97,7 @@ export const fetchPosts = async () => {
       .rpc("get_posts", { my_auth_id: auth_user_id })
       .order("created_at", { ascending: false })
       .limit(100);
-    
+
     if (error) {
       alert(error.message);
     } else {
@@ -177,7 +176,7 @@ export const fetchPostComments = async (post_id: number) => {
   // 特定の投稿に対するコメント一覧を取得する
 };
 
-const realtime_posts_insert_detection = async () => {
+export const realtime_posts_insert_detection = async () => {
   supabase
     .channel("*")
     .on(
