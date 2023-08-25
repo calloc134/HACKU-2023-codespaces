@@ -8,7 +8,7 @@ import { useSession } from "./supabase";
 import { SettingPage } from "./pages/setting";
 
 export const App = () => {
-  const session = useSession();
+  const session = useSession(true);
 
   return (
     <ChakraProvider>

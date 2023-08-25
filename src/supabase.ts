@@ -1,5 +1,8 @@
 import { createClient, Session, User } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import { sessionState } from "./utils/Atoms";
+import { list } from "@chakra-ui/react";
 
 export const supabase = createClient(
   "https://rphpgdwfvgbqodprwhbo.supabase.co",
@@ -15,21 +18,26 @@ const getUser = async () => {
   return cachedUserData;
 };
 
-export const useSession = () => {
-  const [session, setSession] = useState<Session | null>(null);
+export const useSession = (check: boolean = false) => {
+  const [session, setSession] = useRecoilState(sessionState);
+  const listen = useRef(false);
 
   useEffect(() => {
-    async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+    if (!listen.current && check) {
+      listen.current = true;
+      const asyncTask = async () => {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      setSession(session);
-    };
+        setSession(session);
+      };
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+      asyncTask;
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+      });
+    }
 
     return;
   });
