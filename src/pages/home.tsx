@@ -35,7 +35,6 @@ export const HomePage = () => {
         >
           {posts &&
             posts.map((post) => {
-              console.log(post);
               return (
                 <PostCard
                   key={post.post_id}
