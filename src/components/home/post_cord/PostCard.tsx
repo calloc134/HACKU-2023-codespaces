@@ -196,7 +196,6 @@ export const PostCard = (props: PostCardProps) => {
                 }
               }}
             />
-            <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"
               variant="ghost"
