@@ -33,6 +33,8 @@ import axios from "axios";
 import { PostCardComment } from "./post_cord/PostCordComment";
 import { CommentButton } from "./post_cord/CommentButton";
 import { fetchPostComments } from "../../supabase";
+import { postsState } from "../../utils/Atoms";
+import { useRecoilValue } from "recoil";
 
 type PostCardProps = {
   key: Int8Array;
@@ -45,7 +47,7 @@ type PostCardProps = {
 
 export const PostCard = (props: PostCardProps) => {
   const [comments, setComments] = useState<any[] | undefined>([]);
-  const [startedFetch, setStartFetch] = useState(false);
+  const posts = useRecoilValue(postsState);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -122,18 +124,15 @@ export const PostCard = (props: PostCardProps) => {
   };
 
   useEffect(() => {
-    if (!startedFetch) {
-      setStartFetch(true);
-      const asyncTask = async () => {
-        const data = await fetchPostComments(props.post_id);
+    const asyncTask = async () => {
+      const data = await fetchPostComments(props.post_id);
 
-        if (data) {
-          setComments(data); // 状態を更新
-        }
-      };
-      asyncTask();
-    }
-  }, [startedFetch]);
+      if (data) {
+        setComments(data); // 状態を更新
+      }
+    };
+    asyncTask();
+  }, [posts]);
 
   return (
     <Flex justify="center">

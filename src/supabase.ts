@@ -109,11 +109,6 @@ export const fetchPosts = async () => {
   }
 };
 
-export const singOut = async () => {
-  supabase.auth.signOut();
-  cachedUserData = null;
-};
-
 export const sendPost = async (content: string) => {
   try {
     const user = await getUser();

@@ -6,7 +6,6 @@ import { postsState } from "../utils/Atoms";
 import { useEnablePosts } from "../utils/PostHooks";
 
 export const HomePage = () => {
-  console.log("page load");
   const posts = useRecoilValue(postsState);
 
   // 投稿の取得を行う。
@@ -52,6 +51,3 @@ export const HomePage = () => {
     </>
   );
 };
-function useStartPosts() {
-  throw new Error("Function not implemented.");
-}

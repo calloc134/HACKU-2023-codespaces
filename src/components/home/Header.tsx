@@ -27,6 +27,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase";
 import { PostButton } from "./Post";
+import { useReloadPosts } from "../../utils/PostHooks";
 
 const NavLink = (props: { name: string; href: () => void }) => {
   const { name, href } = props;
@@ -55,6 +56,7 @@ export const Header = () => {
     onOpen: onTermsOpen,
     onClose: onTermsClose,
   } = useDisclosure();
+  const reloadPosts = useReloadPosts();
 
   const handleSignOut = () => {
     supabase.auth.signOut();
@@ -66,6 +68,9 @@ export const Header = () => {
   };
   const handleHomeClick = () => {
     navigate("/home");
+  };
+  const handleReload = () => {
+    reloadPosts();
   };
 
   const Links = [{ name: "Home", href: handleHomeClick }];
@@ -93,6 +98,7 @@ export const Header = () => {
               {Links.map((link) => (
                 <NavLink key={link.name} {...link} />
               ))}
+              <Button onClick={handleReload}>Reload</Button>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
