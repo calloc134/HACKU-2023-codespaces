@@ -11,7 +11,7 @@ export const supabase = createClient<Database>(
 
 let cachedUserData: User | null = null;
 
-const getUser = async () => {
+export const getUser = async () => {
   if (cachedUserData) return cachedUserData;
   const user_data = await supabase.auth.getUser();
   cachedUserData = user_data.data.user;
@@ -121,6 +121,21 @@ export const sendPost = async (content: string) => {
       .from("posts")
       .insert({ auth_id: auth_user_id, content: content });
     // 嘘判定の結果をどうするかはまだ未定のため省略
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const deletePost = async (post_id: number) => {
+  try {
+    const { error } = await supabase
+      .from("posts")
+      .update({ is_active: false })
+      .eq("post_id", post_id);
 
     if (error) {
       throw error;
