@@ -25,7 +25,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiShare } from "react-icons/bi";
 import { AiOutlineAim, AiOutlineExclamationCircle } from "react-icons/ai";
 import { Quiz } from "../Liequiz";
 import { useEffect, useState } from "react";
@@ -224,7 +223,6 @@ export const PostCard = (props: PostCardProps) => {
               post_id={props.post_id}
               reloadComments={reloadComments}
             />
-            <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"
               variant="ghost"
