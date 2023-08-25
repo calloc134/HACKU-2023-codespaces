@@ -78,6 +78,14 @@ export const PostCard = (props: PostCardProps) => {
     handleQuizResult(isCorrect);
   };
 
+  const reloadComments = async () => {
+    const data = await fetchPostComments(props.post_id);
+
+    if (data) {
+      setComments(data); // 状態を更新
+    }
+  };
+
   const handleAimClick = () => {
     if (props.content.includes("<?>")) {
       onOpen();
@@ -214,13 +222,7 @@ export const PostCard = (props: PostCardProps) => {
             />
             <CommentButton
               post_id={props.post_id}
-              reloadComments={async () => {
-                const data = await fetchPostComments(props.post_id);
-
-                if (data) {
-                  setComments(data); // 状態を更新
-                }
-              }}
+              reloadComments={reloadComments}
             />
             <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
@@ -262,12 +264,16 @@ export const PostCard = (props: PostCardProps) => {
         <VStack marginLeft="auto" marginRight="auto" width="100%" spacing="0px">
           {comments &&
             comments.map((comment) => {
+              console.log(comment);
               return (
                 <PostCardComment
+                  comment_id={comment.comment_id}
+                  auth_id={comment.auth_id}
                   content={comment.content}
                   account_id={comment.app_user_id}
                   account_name={comment.name}
                   icon_url={comment.icon_url}
+                  reloadComments={reloadComments}
                 />
               );
             })}
