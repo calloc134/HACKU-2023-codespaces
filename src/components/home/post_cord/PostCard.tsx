@@ -32,7 +32,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PostCardComment } from "./PostCordComment";
 import { CommentButton } from "./Comment";
-import { fetchPostComments, getUser } from "../../../supabase";
+import { deletePost, fetchPostComments, getUser } from "../../../supabase";
 import { postsState } from "../../../utils/Atoms";
 import { useRecoilValue } from "recoil";
 import { LikeButton } from "./Like";
@@ -134,6 +134,11 @@ export const PostCard = (props: PostCardProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    await deletePost(props.post_id);
+    reloadPosts();
+  };
+
   // 投稿主であるかの確認
   useEffect(() => {
     const asyncTask = async () => {
@@ -172,20 +177,22 @@ export const PostCard = (props: PostCardProps) => {
                   <Text>{props.account_id}</Text>
                 </Box>
               </Flex>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
-                  minW={0}
-                >
-                  <BsThreeDotsVertical />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Delete</MenuItem>
-                </MenuList>
-              </Menu>
+              {isCurrentUserPost && (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={"full"}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                  >
+                    <BsThreeDotsVertical />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                  </MenuList>
+                </Menu>
+              )}
             </Flex>
           </CardHeader>
           <CardBody>
