@@ -177,7 +177,16 @@ export const PostCard = (props: PostCardProps) => {
             }}
           >
             <Button flex="1" variant="ghost" leftIcon={<BiLike />}></Button>
-            <CommentButton post_id={props.post_id} />
+            <CommentButton
+              post_id={props.post_id}
+              reloadComments={async () => {
+                const data = await fetchPostComments(props.post_id);
+
+                if (data) {
+                  setComments(data); // 状態を更新
+                }
+              }}
+            />
             <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"

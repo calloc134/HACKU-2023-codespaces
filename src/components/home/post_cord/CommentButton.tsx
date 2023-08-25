@@ -14,14 +14,21 @@ import {
 import { BiChat } from "react-icons/bi";
 import { sendPostComment } from "../../../supabase";
 import { useState } from "react";
+import { useReloadPosts } from "../../../utils/PostHooks";
+
+interface ReloadFunction {
+  (): void;
+}
 
 type CommentProps = {
   post_id: number;
+  reloadComments: ReloadFunction;
 };
 
 export const CommentButton = (props: CommentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [content, setContent] = useState<string>("");
+  const reloadPosts = useReloadPosts();
   const toast = useToast();
 
   const handleContentChange = (
@@ -30,8 +37,13 @@ export const CommentButton = (props: CommentProps) => {
     setContent(event.target.value);
   };
   const handleReply = () => {
-    sendPostComment(props.post_id, content);
-    setContent("");
+    const asyncTask = async () => {
+      await sendPostComment(props.post_id, content);
+      setContent("");
+      props.reloadComments();
+    };
+
+    asyncTask();
     onClose();
     toast({
       title: "Success",
@@ -40,7 +52,6 @@ export const CommentButton = (props: CommentProps) => {
       duration: 3000,
       isClosable: true,
     });
-    console.log("c");
   };
 
   return (

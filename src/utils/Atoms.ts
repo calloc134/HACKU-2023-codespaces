@@ -5,3 +5,8 @@ export const sessionState = atom<Session | null>({
   key: "sessionState",
   default: null,
 });
+
+export const postsState = atom<any[]>({
+  key: "posts",
+  default: undefined,
+});

@@ -1,33 +1,16 @@
-import { Flex, VStack, Button } from "@chakra-ui/react";
+import { Flex, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
-import { useEffect, useState } from "react";
-import { fetchPosts } from "../supabase";
+import { useRecoilValue } from "recoil";
+import { postsState } from "../utils/Atoms";
+import { useEnablePosts } from "../utils/PostHooks";
 
 export const HomePage = () => {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [startedFetch, setStartFetch] = useState(false);
+  console.log("page load");
+  const posts = useRecoilValue(postsState);
 
-  useEffect(() => {
-    if (!startedFetch) {
-      setStartFetch(true);
-      const asyncTask = async () => {
-        const data = await fetchPosts();
-
-        if (data) {
-          setPosts(data); // 状態を更新
-        }
-      };
-      asyncTask();
-    }
-  }, [startedFetch]);
-
-  const handleFetchPosts = async () => {
-    const data = await fetchPosts();
-    if (data) {
-      setPosts(data); // ボタンクリックで投稿データを再取得
-    }
-  };
+  // 投稿の取得を行う。
+  useEnablePosts();
 
   return (
     <>
@@ -51,21 +34,24 @@ export const HomePage = () => {
           minH="100vh"
           alignItems="center"
         >
-          <Button onClick={handleFetchPosts}>Get Posts</Button>
-          {posts.map((post) => {
-            return (
-              <PostCard
-                key={post.post_id}
-                post_id={post.post_id}
-                account_id={post.app_user_id}
-                account_name={post.name}
-                content={post.content}
-                icon_url={post.icon_url}
-              />
-            );
-          })}
+          {posts &&
+            posts.map((post) => {
+              return (
+                <PostCard
+                  key={post.post_id}
+                  post_id={post.post_id}
+                  account_id={post.app_user_id}
+                  account_name={post.name}
+                  content={post.content}
+                  icon_url={post.icon_url}
+                />
+              );
+            })}
         </VStack>
       </Flex>
     </>
   );
 };
+function useStartPosts() {
+  throw new Error("Function not implemented.");
+}

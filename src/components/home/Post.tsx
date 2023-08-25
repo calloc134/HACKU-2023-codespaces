@@ -14,10 +14,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { sendPost } from "../../supabase";
+import { useReloadPosts } from "../../utils/PostHooks";
 
 export const PostButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [content, setContent] = useState<string>("");
+  const reloadPosts = useReloadPosts();
   const toast = useToast();
 
   const handleContentChange = (
@@ -26,8 +28,13 @@ export const PostButton = () => {
     setContent(event.target.value);
   };
   const handlePost = () => {
-    sendPost(content);
-    setContent("");
+    const asyncTask = async () => {
+      await sendPost(content);
+      setContent("");
+      reloadPosts();
+    };
+    asyncTask();
+
     onClose();
     toast({
       title: "Success",
