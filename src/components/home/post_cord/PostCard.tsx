@@ -25,19 +25,22 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { BiShare } from "react-icons/bi";
 import { AiOutlineAim, AiOutlineExclamationCircle } from "react-icons/ai";
 import { Quiz } from "../Liequiz";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { PostCardComment } from "./PostCordComment";
 import { CommentButton } from "./Comment";
-import { fetchPostComments } from "../../../supabase";
+import { deletePost, fetchPostComments, getUser } from "../../../supabase";
 import { postsState } from "../../../utils/Atoms";
 import { useRecoilValue } from "recoil";
 import { LikeButton } from "./Like";
+import { useReloadPosts } from "../../../utils/PostHooks";
 
 type PostCardProps = {
   key: Int8Array;
+  auth_id: string;
   post_id: number;
   // 投稿内容
   content: string;
@@ -52,7 +55,10 @@ type PostCardProps = {
 
 export const PostCard = (props: PostCardProps) => {
   const [comments, setComments] = useState<any[] | undefined>([]);
+  const [isCurrentUserPost, setCurrentUserPost] = useState(false);
   const posts = useRecoilValue(postsState);
+
+  const reloadPosts = useReloadPosts();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -128,6 +134,25 @@ export const PostCard = (props: PostCardProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    await deletePost(props.post_id);
+    reloadPosts();
+  };
+
+  // 投稿主であるかの確認
+  useEffect(() => {
+    const asyncTask = async () => {
+      const user = await getUser();
+
+      if (!user) return;
+
+      if (user.id == props.auth_id) {
+        setCurrentUserPost(true);
+      }
+    };
+    asyncTask();
+  });
+
   useEffect(() => {
     const asyncTask = async () => {
       const data = await fetchPostComments(props.post_id);
@@ -152,20 +177,22 @@ export const PostCard = (props: PostCardProps) => {
                   <Text>{props.account_id}</Text>
                 </Box>
               </Flex>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
-                  minW={0}
-                >
-                  <BsThreeDotsVertical />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Delete</MenuItem>
-                </MenuList>
-              </Menu>
+              {isCurrentUserPost && (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={"full"}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                  >
+                    <BsThreeDotsVertical />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                  </MenuList>
+                </Menu>
+              )}
             </Flex>
           </CardHeader>
           <CardBody>
@@ -195,6 +222,7 @@ export const PostCard = (props: PostCardProps) => {
                 }
               }}
             />
+            <Button flex="1" variant="ghost" leftIcon={<BiShare />}></Button>
             <Button
               flex="1"
               variant="ghost"

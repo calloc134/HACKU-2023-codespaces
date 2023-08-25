@@ -39,6 +39,7 @@ export const HomePage = () => {
               return (
                 <PostCard
                   key={post.post_id}
+                  auth_id={post.auth_id}
                   post_id={post.post_id}
                   account_id={post.app_user_id}
                   account_name={post.name}
