@@ -25,7 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../supabase";
+import { singOut } from "../../supabase";
 import { PostButton } from "./Post";
 import { useReloadPosts } from "../../utils/PostHooks";
 
@@ -59,7 +59,7 @@ export const Header = () => {
   const reloadPosts = useReloadPosts();
 
   const handleSignOut = () => {
-    supabase.auth.signOut();
+    singOut();
   };
 
   const navigate = useNavigate();
