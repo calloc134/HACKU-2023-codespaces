@@ -58,6 +58,7 @@ export const signUpAndUpdateUsername = async (
     }
 
     const user = await getUser();
+    console.log("signINQuery => " + signupQuery.data);
 
     if (user == null) {
       alert("エラー(USER_IS_NULL)");
@@ -106,6 +107,11 @@ export const fetchPosts = async () => {
   } catch (error) {
     alert(error);
   }
+};
+
+export const singOut = async () => {
+  supabase.auth.signOut();
+  cachedUserData = null;
 };
 
 export const sendPost = async (content: string) => {
