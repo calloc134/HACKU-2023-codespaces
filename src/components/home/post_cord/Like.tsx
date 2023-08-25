@@ -10,7 +10,7 @@ type LikeProps = {
 };
 
 export const LikeButton = (props: LikeProps) => {
-  const [likes, setLikes] = useState<number>(props.likes ? 0 : props.likes);
+  const [likes, setLikes] = useState<number>(props.likes);
   const [pressed, setPressed] = useState<boolean>(props.pressed);
 
   const handleLike = () => {

@@ -25,7 +25,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiShare } from "react-icons/bi";
 import { AiOutlineAim, AiOutlineExclamationCircle } from "react-icons/ai";
 import { Quiz } from "../Liequiz";
 import { useEffect, useState } from "react";
