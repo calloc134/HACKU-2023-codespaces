@@ -140,10 +140,10 @@ export const SettingPage = () => {
             </Center>
           </Stack>
         </FormControl>
-        <FormControl id="userName" isRequired>
-          <FormLabel>User name</FormLabel>
+        <FormControl id="username" isRequired>
+          <FormLabel>Username</FormLabel>
           <Input
-            placeholder="UserName"
+            placeholder="Username"
             _placeholder={{ color: "gray.500" }}
             type="text"
             value={name}
