@@ -162,9 +162,8 @@ export const fetchPostComments = async (post_id: number) => {
   try {
     // 特定の投稿に対するコメント一覧を取得する
     const { data, error } = await supabase
-      .from("comments")
-      .select("*")
-      .eq("replying_post_id", post_id);
+      .rpc("get_comments", { post_id: post_id })
+      .order("created_at", { ascending: false });
 
     if (error) {
       alert(error.message);
@@ -172,7 +171,7 @@ export const fetchPostComments = async (post_id: number) => {
       return data;
     }
   } catch (error) {
-    alert("a");
+    alert(error);
   }
   // 特定の投稿に対するコメント一覧を取得する
 };

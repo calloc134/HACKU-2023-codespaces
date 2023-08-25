@@ -229,9 +229,9 @@ export const PostCard = (props: PostCardProps) => {
               return (
                 <PostCardComment
                   content={comment.content}
-                  account_id={props.account_id}
-                  account_name={props.account_name}
-                  icon_url={props.icon_url}
+                  account_id={comment.app_user_id}
+                  account_name={comment.name}
+                  icon_url={comment.icon_url}
                 />
               );
             })}
