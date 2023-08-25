@@ -217,6 +217,25 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      get_comments: {
+        Args: {
+          post_id: number;
+        };
+        Returns: {
+          comment_id: number;
+          replying_post_id: number;
+          replying_comment_id: number;
+          created_at: string;
+          updated_at: string;
+          content: string;
+          is_comment_active: boolean;
+          auth_id: string;
+          app_user_id: string;
+          name: string;
+          icon_url: string;
+          is_user_active: boolean;
+        }[];
+      };
       get_posts: {
         Args: {
           my_auth_id: string;
