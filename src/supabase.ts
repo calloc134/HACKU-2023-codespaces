@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { sessionState } from "./utils/Atoms";
 import { list } from "@chakra-ui/react";
+import { Database } from "../types/supabase";
 
-export const supabase = createClient(
+export const supabase = createClient<Database>(
   "https://rphpgdwfvgbqodprwhbo.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwaHBnZHdmdmdicW9kcHJ3aGJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE4NDU4NTEsImV4cCI6MjAwNzQyMTg1MX0.Rni5vkoj06n16aobQ3uuz-Id2A09a4GEPCx6EkzZLgs",
 );
@@ -97,7 +98,7 @@ export const fetchPosts = async () => {
       .rpc("get_posts", { my_auth_id: auth_user_id })
       .order("created_at", { ascending: false })
       .limit(100);
-
+    
     if (error) {
       alert(error.message);
     } else {
@@ -174,4 +175,24 @@ export const fetchPostComments = async (post_id: number) => {
     alert("a");
   }
   // 特定の投稿に対するコメント一覧を取得する
+};
+
+const realtime_posts_insert_detection = async () => {
+  supabase
+    .channel("*")
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "posts",
+      },
+      (payload) => {
+        if (payload.eventType == "INSERT") {
+          console.log("投稿追加後のデータ", payload.new);
+          console.log("投稿追加前のデータ", payload.old);
+        }
+      },
+    )
+    .subscribe();
 };
