@@ -14,7 +14,6 @@ import {
 import { BiChat } from "react-icons/bi";
 import { sendPostComment } from "../../../supabase";
 import { useState } from "react";
-import { useReloadPosts } from "../../../utils/PostHooks";
 
 interface ReloadFunction {
   (): void;
@@ -28,7 +27,6 @@ type CommentProps = {
 export const CommentButton = (props: CommentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [content, setContent] = useState<string>("");
-  const reloadPosts = useReloadPosts();
   const toast = useToast();
 
   const handleContentChange = (
