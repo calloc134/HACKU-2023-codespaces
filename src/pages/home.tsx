@@ -1,20 +1,15 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { PostCard } from "../components/home/PostCard";
 import { Header } from "../components/home/Header";
-import { useEffect, useState } from "react";
-import { fetchPosts } from "../supabase";
+import { useRecoilValue } from "recoil";
+import { postsState } from "../utils/Atoms";
+import { useEnablePosts } from "../utils/PostHooks";
 
 export const HomePage = () => {
-  const [posts, setPosts] = useState<any[]>();
+  const posts = useRecoilValue(postsState);
 
-  useEffect(() => {
-    async () => {
-      const data = await fetchPosts();
-      console.log(data);
-      setPosts(data);
-      console.log(posts);
-    };
-  });
+  // 投稿の取得を行う。
+  useEnablePosts();
 
   return (
     <>
@@ -38,51 +33,19 @@ export const HomePage = () => {
           minH="100vh"
           alignItems="center"
         >
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="Hello World!"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="b"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="c"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="d"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="e"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="f"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="g"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="h"
-          />
-          <PostCard
-            account_name="hoge hoge"
-            account_id="hoge1234"
-            content="i"
-          />
+          {posts &&
+            posts.map((post) => {
+              return (
+                <PostCard
+                  key={post.post_id}
+                  post_id={post.post_id}
+                  account_id={post.app_user_id}
+                  account_name={post.name}
+                  content={post.content}
+                  icon_url={post.icon_url}
+                />
+              );
+            })}
         </VStack>
       </Flex>
     </>

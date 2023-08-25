@@ -1,22 +1,31 @@
-import { AddIcon } from "@chakra-ui/icons";
 import {
+  useDisclosure,
   Button,
   Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
   Textarea,
-  useDisclosure,
+  ModalFooter,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { sendPost } from "../../supabase";
-import { useReloadPosts } from "../../utils/PostHooks";
+import { BiChat } from "react-icons/bi";
+import { sendPostComment } from "../../../supabase";
+import { useState } from "react";
+import { useReloadPosts } from "../../../utils/PostHooks";
 
-export const PostButton = () => {
+interface ReloadFunction {
+  (): void;
+}
+
+type CommentProps = {
+  post_id: number;
+  reloadComments: ReloadFunction;
+};
+
+export const CommentButton = (props: CommentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [content, setContent] = useState<string>("");
   const reloadPosts = useReloadPosts();
@@ -27,18 +36,18 @@ export const PostButton = () => {
   ) => {
     setContent(event.target.value);
   };
-  const handlePost = () => {
+  const handleReply = () => {
     const asyncTask = async () => {
-      await sendPost(content);
+      await sendPostComment(props.post_id, content);
       setContent("");
-      reloadPosts();
+      props.reloadComments();
     };
-    asyncTask();
 
+    asyncTask();
     onClose();
     toast({
       title: "Success",
-      description: "Your post has been sent.",
+      description: "Your reply has been sent.",
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -48,36 +57,29 @@ export const PostButton = () => {
   return (
     <>
       <Button
-        variant={"solid"}
-        colorScheme={"teal"}
-        size={"sm"}
-        mr={4}
-        leftIcon={<AddIcon />}
+        flex="1"
+        variant="ghost"
+        leftIcon={<BiChat />}
         onClick={onOpen}
-      >
-        Post
-      </Button>
-
-      {/* 投稿するときの表示 */}
+      ></Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Posting Lies</ModalHeader>
+          <ModalHeader>Reply</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Textarea
-              resize="none"
-              placeholder="What lie?"
+              placeholder="Write your reply here..."
               value={content}
+              resize="none"
               onChange={handleContentChange}
             />
           </ModalBody>
-
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handlePost}>
-              Post
+            <Button colorScheme="blue" mr={3} onClick={handleReply}>
+              Send
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

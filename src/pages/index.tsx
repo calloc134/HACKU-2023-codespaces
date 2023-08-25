@@ -43,7 +43,7 @@ export const IndexPage = () => {
         </Heading>
         <Text color={"gray.600"}>Liar-only SNS</Text>
 
-        {/*　ログインしているかで条件分岐 */}
+        {/* ログインしているかで条件分岐 */}
 
         {session ? (
           // ログインしている場合
@@ -74,7 +74,7 @@ export const IndexPage = () => {
             </Button>
             <br />
             <ChakraLink color="teal.500" as={ReactRouterLink} to="/auth/signup">
-              Create a account!
+              Create an account!
             </ChakraLink>
           </div>
         )}

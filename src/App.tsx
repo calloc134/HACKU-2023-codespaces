@@ -5,25 +5,26 @@ import { SignInPage } from "./pages/auth/signin";
 import { SignUpPage } from "./pages/auth/signup";
 import { HomePage } from "./pages/home";
 import { useSession } from "./supabase";
-import { SettingPage } from "./pages/Setting";
+import { SettingPage } from "./pages/setting";
 
 export const App = () => {
-  const session = useSession();
+  const session = useSession(true);
 
   return (
     <ChakraProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<IndexPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/settings" element={<SettingPage />} />
           {!session ? (
             <>
               <Route path="/auth/signin" element={<SignInPage />} />
               <Route path="/auth/signup" element={<SignUpPage />} />
             </>
           ) : (
-            <></>
+            <>
+              <Route path="/settings" element={<SettingPage />} />
+              <Route path="/home" element={<HomePage />} />
+            </>
           )}
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
