@@ -48,14 +48,16 @@ export const SettingPage = () => {
 
   const handleSubmit = async () => {
     // メールアドレスとパスワードで認証
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    if (!supabase.auth.getUser()) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-    if (error) {
-      alert("認証エラー");
-      return;
+      if (error) {
+        alert("認証エラー");
+        return;
+      }
     }
 
     // アイコンファイルをアップロード
@@ -86,6 +88,7 @@ export const SettingPage = () => {
           alert("更新エラー");
         } else {
           alert("更新成功");
+          navigate("/home");
         }
       } else {
         alert("ユーザー情報を取得できませんでした");
